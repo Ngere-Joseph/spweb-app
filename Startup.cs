@@ -1,9 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using SPWebApplication.Data;
+using SPWebApplication.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +28,24 @@ namespace SPWebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Session state configuration 
+            services.AddDistributedMemoryCache();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+            });
+            services.AddMvc();
+
+            //DbContext Config
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //Dependency injection Life time
+            services.AddScoped<ILogicServices, Logic>();
+
+            //Register HttpContextAccessor
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddControllersWithViews();
         }
 
@@ -45,6 +68,8 @@ namespace SPWebApplication
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession(); //Call session middleware
 
             app.UseEndpoints(endpoints =>
             {

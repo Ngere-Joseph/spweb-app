@@ -1,0 +1,17 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration configuration
+
+<footer class="main-footer">
+    @{ 
+        var CreatedYear = 2014;
+
+        var CompAge = DateTime.Now.Year - CreatedYear;
+
+    }
+
+    <strong>Copyright &copy; @DateTime.Now.Year <a href=@configuration.GetSection("PageConfig")["CompURL"]>@configuration.GetSection("PageConfig")["PageName"]</a>. Over @CompAge year(s) and still moving </strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.2.0
+    </div>
+</footer>

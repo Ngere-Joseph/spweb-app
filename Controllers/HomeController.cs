@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SPWebApplication.Models;
 using System;
@@ -18,20 +19,25 @@ namespace SPWebApplication.Controllers
             _logger = logger;
         }
 
+       
         public IActionResult Index()
-        {
+        {  
             return View();
         }
+       
+        //public IActionResult Privacy()
+        //{const string SessionName = "Admin";
+        //    HttpContext.Session.SetString("SessionName", SessionName);
+        //    ;
+        //    return View();
+        //}
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{const string SessionName = "Admin";
+        //    HttpContext.Session.SetString("SessionName", SessionName);
+        //    ;
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
     }
 }

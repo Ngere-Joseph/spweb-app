@@ -1,0 +1,69 @@
+﻿@model IEnumerable<FAQ>
+
+@{
+    Layout = "~/Views/Shared/_Secured.cshtml";
+    ViewBag.Title = "Manage FAQs";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body class="hold-transition sidebar-mini">
+                <!-- Content Header (Page header) -->
+
+                <section class="content-header" >
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>FAQ</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active"> @ViewBag.Title</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-12" id="accordion">
+                            @{
+                                var total = 0;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                total = total + 1;
+                                string collapsevalue = "collapse" + total.ToString();
+                                <div class="card card-primary card-outline">
+                                    <a class="d-block w-100" data-toggle="collapse" href="#@collapsevalue">
+                                        <div class="card-header">
+                                            <h4 class="card-title w-100">
+                                                <a href="@Url.Action("Add","Faq",new { SN = item.id,  })">  @total. @item.Category </a>
+
+
+</h4>
+                                           
+                                        </div>
+                                    </a>
+                                    <div id="@collapsevalue" class="collapse show" data-parent="#accordion">
+                                        <div class="card-body">
+                                            @item.Description
+                                        </div>
+                                    </div>
+                                </div>
+                           }
+                        </div>
+                    </div>
+                
+                    <div>
+                        <a class="btn btn-outline-success float-right" asp-action="Add" asp-controller="Faq">Add New FAQ</a>
+                    </div>
+                </section>
+</body>
+</html>
